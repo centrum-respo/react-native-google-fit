@@ -86,7 +86,8 @@ public class ActivityHistory {
         for (DataType dt : WORKOUT_FIELD_DATATYPE) {
             readRequestBuilder.aggregate(dt);
         }
-        readRequestBuilder.aggregate(DataType.TYPE_DISTANCE_DELTA);
+        
+        //readRequestBuilder.aggregate(DataType.TYPE_DISTANCE_DELTA);
 
         //bucket by activity segment is critical, not bucketByTime
         DataReadRequest readRequest = readRequestBuilder
