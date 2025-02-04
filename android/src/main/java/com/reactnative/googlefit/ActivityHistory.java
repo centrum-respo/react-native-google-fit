@@ -87,7 +87,7 @@ public class ActivityHistory {
             readRequestBuilder.aggregate(dt);
         }
         
-        //readRequestBuilder.aggregate(DataType.TYPE_DISTANCE_DELTA);
+        // readRequestBuilder.aggregate(DataType.TYPE_DISTANCE_DELTA);
 
         //bucket by activity segment is critical, not bucketByTime
         DataReadRequest readRequest = readRequestBuilder
@@ -368,6 +368,23 @@ public class ActivityHistory {
 
             sessionInsertBuilder.addDataSet(stepsDataSet);
             fitnessOptionsBuilder.addDataType(DataType.TYPE_STEP_COUNT_DELTA, FitnessOptions.ACCESS_WRITE);
+        }
+
+        if (options.hasKey(DISTANCE_FIELD_NAME)) {
+            float distance = (float) options.getDouble(DISTANCE_FIELD_NAME);
+            DataSource distanceDataSource = createWorkoutDataSource(DataType.TYPE_DISTANCE_DELTA);
+
+            DataPoint distanceDataPoint = DataPoint.builder(distanceDataSource)
+                    .setTimeInterval(startTime, endTime, TimeUnit.MILLISECONDS)
+                    .setField(Field.FIELD_DISTANCE, distance)
+                    .build();
+
+            DataSet distanceDataSet = DataSet.builder(distanceDataSource)
+                    .add(distanceDataPoint)
+                    .build();
+
+            sessionInsertBuilder.addDataSet(distanceDataSet);
+            fitnessOptionsBuilder.addDataType(DataType.TYPE_DISTANCE_DELTA, FitnessOptions.ACCESS_WRITE);
         }
 
         // add dataSet into session
