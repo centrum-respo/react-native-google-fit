@@ -1,10 +1,13 @@
 {
   "name": "react-native-google-fit",
-  "version": "0.21.0",
+  "version": "0.22.2",
   "description": "A React Native bridge module for interacting with Google Fit",
   "main": "index.android.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "expo": {
+    "plugin": "./app.plugin.js"
   },
   "bugs": {
     "url": "https://github.com/StasDoskalenko/react-native-google-fit/issues"
@@ -21,7 +24,9 @@
     "android",
     "fitness",
     "native",
-    "ReactNative"
+    "ReactNative",
+    "expo",
+    "expo-plugin"
   ],
   "license": "MIT",
   "repository": {
@@ -46,6 +51,13 @@
     "react-native": "^0.72.6"
   },
   "peerDependencies": {
+    "expo": "*",
     "react-native": ">=0.60.0"
-  }
+  },
+  "peerDependenciesMeta": {
+    "expo": {
+      "optional": true
+    }
+  },
+  "packageManager": "yarn@4.10.3"
 }
