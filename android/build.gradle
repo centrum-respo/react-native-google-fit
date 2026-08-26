@@ -16,6 +16,9 @@ def safeExtGet(prop, fallback) {
     rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
 }
 
+// play-services-auth 22.0.0 removed the legacy GoogleSignIn APIs this library still uses.
+def playServicesAuthVersion = safeExtGet('authVersion', '21.6.0')
+
 def supportsNamespace() {
     def parsed = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION.tokenize('.')
     def major = parsed[0].toInteger()
@@ -82,6 +85,12 @@ dependencies {
         def defaultAndroidXVersion = "1.+"
         implementation "androidx.appcompat:appcompat:${safeExtGet(androidXVersion, defaultAndroidXVersion)}"
     }
-    implementation "com.google.android.gms:play-services-auth:${safeExtGet('authVersion', '+')}"
+    implementation "com.google.android.gms:play-services-auth:$playServicesAuthVersion"
     implementation "com.google.android.gms:play-services-fitness:${safeExtGet('fitnessVersion', '+')}"
+}
+
+configurations.configureEach {
+    resolutionStrategy {
+        force "com.google.android.gms:play-services-auth:$playServicesAuthVersion"
+    }
 }
